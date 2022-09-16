@@ -5,28 +5,73 @@ output: html_document
 date: "`r Sys.Date()`"
 ---
 
-```{r setup, include = FALSE}
+We will load the tidyverse.
+```{r setup}
 library(tidyverse)
 ```
 
 ## Problem 1
-First, we will load in the `penguins` dataset.
+We will load in the `penguins` dataset.
 
 ```{r}
 data("penguins", package = "palmerpenguins")
 ```
 
-This dataset contains 8 variables: penguin species, island, bill length in mm, flipper length in mm, body mass in gm, sex, and year. There are `r nrow(penguins)` rows and `r ncol(penguins)` columns. The mean flipper length is `r mean(penguins$flipper_length_mm, na.rm = TRUE)` mm. 
+This dataset contains **8 variables**: `species`, `island`, `bill_length__mm`, `bill_depth_mm`, `flipper_length_mm`, `body_mass_g`, `sex`, and `year`. 
 
-Next, this is a scatterplot with `flipper_length_mm` (y) vs and `bill_length_mm` (x) with points colored using the `species` variable.
+There are **`r nrow(penguins)` rows** and **`r ncol(penguins)` columns**. 
+
+The **mean flipper length** is `r mean(penguins$flipper_length_mm, na.rm = TRUE)` mm. 
+
+Next, this is a **scatter plot** with `flipper_length_mm` (y) vs and `bill_length_mm` (x) with points colored using the `species` variable.
 
 ```{r}
 ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) + geom_point()
 ```
 
-Finally, we will export this scatterplot to the project directory as a PDF file.
+Finally, we will **export** this scatter plot to the project directory as a PDF file.
 
 ```{r}
 ggsave("scatterplot.pdf", height = 4, width = 6)
 ```
 
+## Problem 2 
+First, we will create our **dataframe** comprised of:
+
+* A random sample of size 10 from a standard Normal distribution
+* A logical vector indicating whether elements of the sample are greater than 0
+* A character vector of length 10
+* A factor vector of length 10, with 3 different factor “levels”
+
+```{r}
+df = tibble(
+  random_sample = rnorm(10),
+  vec_logic = random_sample > 0,
+  vec_char = c("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"),
+  vec_factor = factor(c("high", "medium", "low", "high", "medium", "low", "high", "medium", "low", "high"))
+)
+
+print(df)
+```
+
+Next, we will try to take the **mean** of each variable in the dataframe. We are able to obtain the mean of `random_sample` since it is a numeric vector. We are also able to obtain the mean of `vec_logic` where `TRUE` is considered 1 and `FALSE` is considered 0. We are unable to obtain the means of `vec_char` or `vec_factor`.
+```{r}
+# mean of random_sample variable, works
+mean(pull(df, random_sample))
+
+# mean of vec_logic variable, works
+mean(pull(df, vec_logic))
+
+# mean of vec_char variable, does not work
+mean(pull(df, vec_char))
+
+# mean of vec_factor variable, does not work
+mean(pull(df, vec_factor))
+```
+
+We will now explicitly **convert** the logical (`vec_logic`), character (`vec_char`), and factor (`vec_factor`) variables using the `as.numeric` function. This function converts `vec_logic` and `vec_factor` to the numerical type without mutating the original dataframe. If we were to create a new variable for `vec_factor` converted to a numerical vector, we would then be able to obtain the mean of this new variable. The `as.numeric` function is, however, unable to convert `vec_char` to the numerical type, so we would not be able to obtain the mean. 
+```{r eval = FALSE}
+as.numeric(df$vec_logic) 
+as.numeric(df$vec_char) 
+as.numeric(df$vec_factor)
+```
