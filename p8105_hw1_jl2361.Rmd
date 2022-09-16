@@ -1,0 +1,32 @@
+---
+title: "P8105 HW1"
+author: "Jennifer Lee"
+output: html_document
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include = FALSE}
+library(tidyverse)
+```
+
+## Problem 1
+First, we will load in the `penguins` dataset.
+
+```{r}
+data("penguins", package = "palmerpenguins")
+```
+
+This dataset contains 8 variables: penguin species, island, bill length in mm, flipper length in mm, body mass in gm, sex, and year. There are `r nrow(penguins)` rows and `r ncol(penguins)` columns. The mean flipper length is `r mean(penguins$flipper_length_mm, na.rm = TRUE)` mm. 
+
+Next, this is a scatterplot with `flipper_length_mm` (y) vs and `bill_length_mm` (x) with points colored using the `species` variable.
+
+```{r}
+ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) + geom_point()
+```
+
+Finally, we will export this scatterplot to the project directory as a PDF file.
+
+```{r}
+ggsave("scatterplot.pdf", height = 4, width = 6)
+```
+
