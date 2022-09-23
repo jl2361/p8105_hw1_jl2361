@@ -1,28 +1,33 @@
 ---
 title: "P8105 HW1"
-author: "Jennifer Lee"
+author: "Jennifer Lee (UNI: jl2361)"
 output: html_document
-date: "`r Sys.Date()`"
 ---
 
+## Problem 1
+
+### Description of the dataset
 We will load the tidyverse.
+
 ```{r setup}
 library(tidyverse)
 ```
 
-## Problem 1
-We will load in the `penguins` dataset.
+We will load in the `penguins` **dataset**. Here is a view of the dataset and a brief summary.
 
 ```{r}
 data("penguins", package = "palmerpenguins")
+head(penguins)
+summary(penguins)
 ```
 
-This dataset contains **8 variables**: `species`, `island`, `bill_length__mm`, `bill_depth_mm`, `flipper_length_mm`, `body_mass_g`, `sex`, and `year`. 
+There are data from 3 species of penguins of approximately equal sex distribution from 3 different islands. There are **8 total variables** in this dataset: `species`, `island`, `bill_length__mm`, `bill_depth_mm`, `flipper_length_mm`, `body_mass_g`, `sex`, and `year`. 
 
 There are **`r nrow(penguins)` rows** and **`r ncol(penguins)` columns**. 
 
-The **mean flipper length** is `r mean(penguins$flipper_length_mm, na.rm = TRUE)` mm. 
+The **mean flipper length** is `r mean(pull(penguins, flipper_length_mm), na.rm = TRUE)` mm. 
 
+### Scatter plot
 Next, this is a **scatter plot** with `flipper_length_mm` (y) vs and `bill_length_mm` (x) with points colored using the `species` variable.
 
 ```{r}
@@ -54,24 +59,35 @@ df = tibble(
 print(df)
 ```
 
-Next, we will try to take the **mean** of each variable in the dataframe. We are able to obtain the mean of `random_sample` since it is a numeric vector. We are also able to obtain the mean of `vec_logic` where `TRUE` is considered 1 and `FALSE` is considered 0. We are unable to obtain the means of `vec_char` or `vec_factor`.
+Next, we will try to take the **mean** of each variable in the dataframe. We are able to obtain the mean of `random_sample` since it is a numeric vector. We are also able to obtain the mean of `vec_logic` where `TRUE` is coerced to a numeric of 1 and `FALSE` is coerced to a numeric of 0. We are unable to obtain the means of `vec_char` or `vec_factor`.
 ```{r}
-# mean of random_sample variable, works
+# mean of random_sample variable- this works
 mean(pull(df, random_sample))
 
-# mean of vec_logic variable, works
+# mean of vec_logic variable- this works
 mean(pull(df, vec_logic))
 
-# mean of vec_char variable, does not work
+# mean of vec_char variable- this does not work
 mean(pull(df, vec_char))
 
-# mean of vec_factor variable, does not work
+# mean of vec_factor variable- this does not work
 mean(pull(df, vec_factor))
 ```
 
-We will now explicitly **convert** the logical (`vec_logic`), character (`vec_char`), and factor (`vec_factor`) variables using the `as.numeric` function. This function converts `vec_logic` and `vec_factor` to the numerical type without mutating the original dataframe. If we were to create a new variable for `vec_factor` converted to a numerical vector, we would then be able to obtain the mean of this new variable. The `as.numeric` function is, however, unable to convert `vec_char` to the numerical type, so we would not be able to obtain the mean. 
+We will now explicitly **convert** the logical (`vec_logic`), character (`vec_char`), and factor (`vec_factor`) variables using the `as.numeric` function. This function converts `vec_logic` and `vec_factor` to the numeric type. Again, we are able to obtain the mean of `vec_logic` where `TRUE` is coerced to a numeric of 1 and `FALSE` is coerced to a numeric of 0. If we were to create a new variable for `vec_factor` converted to a numeric vector using the `as.numeric` function, we would then be able to obtain the mean of this new variable. 
+
+The `as.numeric` function is, however, unable to convert `vec_char` to the numeric type, so we are not able to obtain its mean. 
 ```{r eval = FALSE}
-as.numeric(df$vec_logic) 
-as.numeric(df$vec_char) 
-as.numeric(df$vec_factor)
+as.numeric(pull(df, vec_logic)) 
+as.numeric(pull(df, vec_char)) 
+as.numeric(pull(df, vec_factor))
+
+# mean of vec_logic variable- this works
+mean(pull(df, vec_logic))
+
+# mean of vec_char variable- this does not work 
+mean(pull(df, vec_char))
+
+# mean of vec_factor variable- this does not work unless we create a new variable for vec_factor converted to a numeric type using the as.numeric function
+mean(pull(df, vec_factor))
 ```

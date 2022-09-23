@@ -9,9 +9,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Jennifer Lee" />
+<meta name="author" content="Jennifer Lee (UNI: jl2361)" />
 
-<meta name="date" content="2022-09-16" />
 
 <title>P8105 HW1</title>
 
@@ -364,12 +363,15 @@ pre code {
 
 
 <h1 class="title toc-ignore">P8105 HW1</h1>
-<h4 class="author">Jennifer Lee</h4>
-<h4 class="date">2022-09-16</h4>
+<h4 class="author">Jennifer Lee (UNI: jl2361)</h4>
 
 </div>
 
 
+<div id="problem-1" class="section level2">
+<h2>Problem 1</h2>
+<div id="description-of-the-dataset" class="section level3">
+<h3>Description of the dataset</h3>
 <p>We will load the tidyverse.</p>
 <pre class="r"><code>library(tidyverse)</code></pre>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
@@ -380,17 +382,49 @@ pre code {
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div id="problem-1" class="section level2">
-<h2>Problem 1</h2>
-<p>We will load in the <code>penguins</code> dataset.</p>
-<pre class="r"><code>data(&quot;penguins&quot;, package = &quot;palmerpenguins&quot;)</code></pre>
-<p>This dataset contains <strong>8 variables</strong>:
-<code>species</code>, <code>island</code>, <code>bill_length__mm</code>,
+<p>We will load in the <code>penguins</code> <strong>dataset</strong>.
+Here is a view of the dataset and a brief summary.</p>
+<pre class="r"><code>data(&quot;penguins&quot;, package = &quot;palmerpenguins&quot;)
+head(penguins)</code></pre>
+<pre><code>## # A tibble: 6 × 8
+##   species island    bill_length_mm bill_depth_mm flipper_l…¹ body_…² sex    year
+##   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;       &lt;int&gt;   &lt;int&gt; &lt;fct&gt; &lt;int&gt;
+## 1 Adelie  Torgersen           39.1          18.7         181    3750 male   2007
+## 2 Adelie  Torgersen           39.5          17.4         186    3800 fema…  2007
+## 3 Adelie  Torgersen           40.3          18           195    3250 fema…  2007
+## 4 Adelie  Torgersen           NA            NA            NA      NA &lt;NA&gt;   2007
+## 5 Adelie  Torgersen           36.7          19.3         193    3450 fema…  2007
+## 6 Adelie  Torgersen           39.3          20.6         190    3650 male   2007
+## # … with abbreviated variable names ¹​flipper_length_mm, ²​body_mass_g</code></pre>
+<pre class="r"><code>summary(penguins)</code></pre>
+<pre><code>##       species          island    bill_length_mm  bill_depth_mm  
+##  Adelie   :152   Biscoe   :168   Min.   :32.10   Min.   :13.10  
+##  Chinstrap: 68   Dream    :124   1st Qu.:39.23   1st Qu.:15.60  
+##  Gentoo   :124   Torgersen: 52   Median :44.45   Median :17.30  
+##                                  Mean   :43.92   Mean   :17.15  
+##                                  3rd Qu.:48.50   3rd Qu.:18.70  
+##                                  Max.   :59.60   Max.   :21.50  
+##                                  NA&#39;s   :2       NA&#39;s   :2      
+##  flipper_length_mm  body_mass_g       sex           year     
+##  Min.   :172.0     Min.   :2700   female:165   Min.   :2007  
+##  1st Qu.:190.0     1st Qu.:3550   male  :168   1st Qu.:2007  
+##  Median :197.0     Median :4050   NA&#39;s  : 11   Median :2008  
+##  Mean   :200.9     Mean   :4202                Mean   :2008  
+##  3rd Qu.:213.0     3rd Qu.:4750                3rd Qu.:2009  
+##  Max.   :231.0     Max.   :6300                Max.   :2009  
+##  NA&#39;s   :2         NA&#39;s   :2</code></pre>
+<p>There are data from 3 species of penguins of approximately equal sex
+distribution from 3 different islands. There are <strong>8 total
+variables</strong> in this dataset: <code>species</code>,
+<code>island</code>, <code>bill_length__mm</code>,
 <code>bill_depth_mm</code>, <code>flipper_length_mm</code>,
 <code>body_mass_g</code>, <code>sex</code>, and <code>year</code>.</p>
 <p>There are <strong>344 rows</strong> and <strong>8
 columns</strong>.</p>
 <p>The <strong>mean flipper length</strong> is 200.9152047 mm.</p>
+</div>
+<div id="scatter-plot" class="section level3">
+<h3>Scatter plot</h3>
 <p>Next, this is a <strong>scatter plot</strong> with
 <code>flipper_length_mm</code> (y) vs and <code>bill_length_mm</code>
 (x) with points colored using the <code>species</code> variable.</p>
@@ -401,6 +435,7 @@ columns</strong>.</p>
 project directory as a PDF file.</p>
 <pre class="r"><code>ggsave(&quot;scatterplot.pdf&quot;, height = 4, width = 6)</code></pre>
 <pre><code>## Warning: Removed 2 rows containing missing values (geom_point).</code></pre>
+</div>
 </div>
 <div id="problem-2" class="section level2">
 <h2>Problem 2</h2>
@@ -424,35 +459,35 @@ print(df)</code></pre>
 <pre><code>## # A tibble: 10 × 4
 ##    random_sample vec_logic vec_char vec_factor
 ##            &lt;dbl&gt; &lt;lgl&gt;     &lt;chr&gt;    &lt;fct&gt;     
-##  1        -0.291 FALSE     a        high      
-##  2         0.156 TRUE      b        medium    
-##  3        -0.497 FALSE     c        low       
-##  4        -1.49  FALSE     d        high      
-##  5        -2.21  FALSE     e        medium    
-##  6        -1.83  FALSE     f        low       
-##  7         1.82  TRUE      g        high      
-##  8         1.02  TRUE      h        medium    
-##  9         1.18  TRUE      i        low       
-## 10         0.646 TRUE      j        high</code></pre>
+##  1        0.260  TRUE      a        high      
+##  2       -0.783  FALSE     b        medium    
+##  3        0.723  TRUE      c        low       
+##  4        1.26   TRUE      d        high      
+##  5       -0.196  FALSE     e        medium    
+##  6       -0.371  FALSE     f        low       
+##  7        1.10   TRUE      g        high      
+##  8        0.946  TRUE      h        medium    
+##  9       -0.629  FALSE     i        low       
+## 10       -0.0744 FALSE     j        high</code></pre>
 <p>Next, we will try to take the <strong>mean</strong> of each variable
 in the dataframe. We are able to obtain the mean of
 <code>random_sample</code> since it is a numeric vector. We are also
 able to obtain the mean of <code>vec_logic</code> where
-<code>TRUE</code> is considered 1 and <code>FALSE</code> is considered
-0. We are unable to obtain the means of <code>vec_char</code> or
-<code>vec_factor</code>.</p>
-<pre class="r"><code># mean of random_sample variable, works
+<code>TRUE</code> is coerced to a numeric of 1 and <code>FALSE</code> is
+coerced to a numeric of 0. We are unable to obtain the means of
+<code>vec_char</code> or <code>vec_factor</code>.</p>
+<pre class="r"><code># mean of random_sample variable- this works
 mean(pull(df, random_sample))</code></pre>
-<pre><code>## [1] -0.1493393</code></pre>
-<pre class="r"><code># mean of vec_logic variable, works
+<pre><code>## [1] 0.2237133</code></pre>
+<pre class="r"><code># mean of vec_logic variable- this works
 mean(pull(df, vec_logic))</code></pre>
 <pre><code>## [1] 0.5</code></pre>
-<pre class="r"><code># mean of vec_char variable, does not work
+<pre class="r"><code># mean of vec_char variable- this does not work
 mean(pull(df, vec_char))</code></pre>
 <pre><code>## Warning in mean.default(pull(df, vec_char)): argument is not numeric or logical:
 ## returning NA</code></pre>
 <pre><code>## [1] NA</code></pre>
-<pre class="r"><code># mean of vec_factor variable, does not work
+<pre class="r"><code># mean of vec_factor variable- this does not work
 mean(pull(df, vec_factor))</code></pre>
 <pre><code>## Warning in mean.default(pull(df, vec_factor)): argument is not numeric or
 ## logical: returning NA</code></pre>
@@ -461,16 +496,28 @@ mean(pull(df, vec_factor))</code></pre>
 (<code>vec_logic</code>), character (<code>vec_char</code>), and factor
 (<code>vec_factor</code>) variables using the <code>as.numeric</code>
 function. This function converts <code>vec_logic</code> and
-<code>vec_factor</code> to the numerical type without mutating the
-original dataframe. If we were to create a new variable for
-<code>vec_factor</code> converted to a numerical vector, we would then
-be able to obtain the mean of this new variable. The
-<code>as.numeric</code> function is, however, unable to convert
-<code>vec_char</code> to the numerical type, so we would not be able to
-obtain the mean.</p>
-<pre class="r"><code>as.numeric(df$vec_logic) 
-as.numeric(df$vec_char) 
-as.numeric(df$vec_factor)</code></pre>
+<code>vec_factor</code> to the numeric type. Again, we are able to
+obtain the mean of <code>vec_logic</code> where <code>TRUE</code> is
+coerced to a numeric of 1 and <code>FALSE</code> is coerced to a numeric
+of 0. If we were to create a new variable for <code>vec_factor</code>
+converted to a numeric vector using the <code>as.numeric</code>
+function, we would then be able to obtain the mean of this new
+variable.</p>
+<p>The <code>as.numeric</code> function is, however, unable to convert
+<code>vec_char</code> to the numeric type, so we are not able to obtain
+its mean.</p>
+<pre class="r"><code>as.numeric(pull(df, vec_logic)) 
+as.numeric(pull(df, vec_char)) 
+as.numeric(pull(df, vec_factor))
+
+# mean of vec_logic variable- this works
+mean(pull(df, vec_logic))
+
+# mean of vec_char variable- this does not work 
+mean(pull(df, vec_char))
+
+# mean of vec_factor variable- this does not work unless we create a new variable for vec_factor converted to a numeric type using the as.numeric function
+mean(pull(df, vec_factor))</code></pre>
 </div>
 
 
