@@ -74,7 +74,7 @@ mean(pull(df, vec_char))
 mean(pull(df, vec_factor))
 ```
 
-We will now explicitly **convert** the logical (`vec_logic`), character (`vec_char`), and factor (`vec_factor`) variables using the `as.numeric` function. This function converts `vec_logic` and `vec_factor` to the numeric type. Again, we are able to obtain the mean of `vec_logic` where `TRUE` is coerced to a numeric of 1 and `FALSE` is coerced to a numeric of 0. If we were to create a new variable for `vec_factor` converted to a numeric vector using the `as.numeric` function, we would then be able to obtain the mean of this new variable. 
+We will now explicitly **convert** the logical (`vec_logic`), character (`vec_char`), and factor (`vec_factor`) variables using the `as.numeric` function. This function converts `vec_logic` and `vec_factor` to the numeric type. Again, we are able to obtain the mean of `vec_logic` where `TRUE` is coerced to a numeric of 1 and `FALSE` is coerced to a numeric of 0. If we were to create a new variable for `vec_factor` converted to a numeric vector using the `as.numeric` function, we would then be able to obtain the mean of this new variable where the levels are assigned alphabetically.
 
 The `as.numeric` function is, however, unable to convert `vec_char` to the numeric type, so we are not able to obtain its mean. 
 ```{r eval = FALSE}
@@ -90,4 +90,7 @@ mean(pull(df, vec_char))
 
 # mean of vec_factor variable- this does not work unless we create a new variable for vec_factor converted to a numeric type using the as.numeric function
 mean(pull(df, vec_factor))
+
+vec_factor_converted = as.numeric(pull(df, vec_factor))
+mean(vec_factor_converted)
 ```
